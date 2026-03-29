@@ -13,10 +13,16 @@ if ! docker buildx version >/dev/null 2>&1; then
   exit 1
 fi
 
-if ! docker buildx inspect multiarch >/dev/null 2>&1; then
-  docker buildx create --name multiarch --driver docker-container --bootstrap
+# Use host BuildKit (docker driver). Nested docker-container builders often OOM on gem steps.
+# Colima only allows one docker-driver instance — use its "colima" builder when it exists.
+if docker buildx inspect colima >/dev/null 2>&1; then
+  docker buildx use colima
+elif docker buildx inspect multiarch >/dev/null 2>&1; then
+  docker buildx use multiarch
+else
+  docker buildx create --name multiarch --driver docker --bootstrap
+  docker buildx use multiarch
 fi
-docker buildx use multiarch
 
 docker buildx build \
   --platform "${PLATFORMS}" \

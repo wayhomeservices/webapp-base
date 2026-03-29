@@ -9,6 +9,7 @@ ENV NODE_OPTIONS=--openssl-legacy-provider
 
 RUN apt-get update -qq && apt-get upgrade -y -qq && \
     apt-get install -y --no-install-recommends \
+      build-essential \
       ca-certificates \
       curl \
       gnupg \
@@ -16,6 +17,8 @@ RUN apt-get update -qq && apt-get upgrade -y -qq && \
       ghostscript \
       imagemagick \
       libmagickwand-dev \
+      libyaml-dev \
+      pkg-config \
       postgresql-client \
       vim \
     && mkdir -p /etc/apt/keyrings \

@@ -39,8 +39,8 @@ Or equivalently:
 
 ```sh
 docker login
-docker buildx create --name multiarch --driver docker-container --bootstrap 2>/dev/null || true
-docker buildx use multiarch
+docker buildx use colima 2>/dev/null || docker buildx use multiarch 2>/dev/null || \
+  { docker buildx create --name multiarch --driver docker --bootstrap && docker buildx use multiarch; }
 docker buildx build --platform linux/amd64,linux/arm64 -t wayhomeservices/webapp-base:latest --push .
 ```
 
