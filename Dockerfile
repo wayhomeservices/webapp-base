@@ -16,6 +16,8 @@ RUN apt-get update -qq && apt-get upgrade -y -qq && \
       git \
       ghostscript \
       imagemagick \
+      libheif1 \
+      libheif-dev \
       libmagickwand-dev \
       libyaml-dev \
       pkg-config \
@@ -26,7 +28,6 @@ RUN apt-get update -qq && apt-get upgrade -y -qq && \
     && echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_22.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list \
     && apt-get update -qq \
     && apt-get install -y --no-install-recommends nodejs \
-    && npm install -g npm@11 \
     && corepack enable \
     && corepack prepare yarn@1.22.22 --activate \
     && rm -rf /var/lib/apt/lists/*
